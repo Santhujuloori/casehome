@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .service-options {
+            display: flex;
+            justify-content: space-between;
+        }
+        .service {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            width: 45%;
+        }
+        .service ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .service ul li {
+            margin-bottom: 10px;
+        }
+        .service ul li button {
+            background-color: #7377de;
+            color: white;
+            border: none;
+            display:flex;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .service ul li button:hover {
+            background-color: #45a049;
+        }
+        .booking-form, .confirmation {
+            margin-top: 20px;
+            background-color: #f7f4f4;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none;
+        }
+        form {
+            display: grid;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="date"],
+        select,
+        textarea,
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .confirmation {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .confirmation h2 {
+            color: #3c763d;
+        }
+        .confirmation p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose a Service</h1>
+        <div class="service-options">
+            <div class="service">
+                <h2>AC & Appliances Repair</h2>
+                <ul>
+                    <li><button onclick="selectService('AC')">AC repair</button></li>
+                    <li><button onclick="selectService('TV')">TV repair</button></li>
+                    <li><button onclick="selectService('Fridge')">Fridge repair</button></li>
+                    <li><button onclick="selectService('Washing')">Washing machine repair</button></li>
+                </ul>
+            </div>
+            <!-- Other service options can be added similarly -->
+        </div>
+    </div>
+
+    <div class="booking-form hidden" id="bookingForm">
+        <h2>Book <span id="selectedServiceName"></span> Repair</h2>
+        <form id="serviceBookingForm">
+            <label for="serviceDate">Date:</label>
+            <input type="date" id="serviceDate" name="serviceDate" required>
+            
+            <label for="slot">Select Slot:</label>
+            <select id="slot" name="slot" required>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="evening">Evening</option>
+            </select>
+            
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" maxlength="100" required></textarea>
+            
+            <label for="vendor">Vendor Selection:</label>
+            <select id="vendor" name="vendor" required>
+                <option value="vendor1">Vendor 1</option>
+                <option value="vendor2">Vendor 2</option>
+                <option value="vendor3">Vendor 3</option>
+            </select>
+            
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" value="$100" readonly>
+            
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </div>
+
+    <div class="confirmation hidden" id="confirmation">
+        <h2>Booking Confirmation</h2>
+        <p id="confirmationMessage"></p>
+        <p>Service ID: <span id="serviceId"></span></p>
+        <p>Vendor Name: <span id="confirmedVendor"></span></p>
+        <p>Date/Slot: <span id="confirmedDateSlot"></span></p>
+    </div>
+
+    <script>
+        function selectService(serviceName) {
+            // Update the selected service name in the booking form
+            document.getElementById('selectedServiceName').textContent = serviceName + ' Repair';
+            // Show the booking form
+            document.getElementById('bookingForm').classList.remove('hidden');
+        }
+
+        document.getElementById('serviceBookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Simulate booking confirmation
+            // Here you would handle form submission via AJAX or form submission logic
+            let formData = new FormData(this);
+            let serviceDate = formData.get('serviceDate');
+            let selectedSlot = formData.get('slot');
+            let address = formData.get('address');
+            let selectedVendor = formData.get('vendor');
+            
+            // Generate a random service ID (for demonstration purposes)
+            let serviceId = Math.floor(Math.random() * 1000000);
+            
+            // Update confirmation page with booking details
+            document.getElementById('confirmationMessage').textContent = 'Service Booked successfully';
+            document.getElementById('serviceId').textContent = serviceId;
+            document.getElementById('confirmedVendor').textContent = selectedVendor;
+            document.getElementById('confirmedDateSlot').textContent = `${serviceDate}, ${selectedSlot}`;
+            
+            // Hide booking form and show confirmation
+            document.getElementById('bookingForm').classList.add('hidden');
+            document.getElementById('confirmation').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
