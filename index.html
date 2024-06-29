@@ -172,6 +172,11 @@
             document.getElementById('selectedServiceName').textContent = serviceName + ' Repair';
             // Show the booking form
             document.getElementById('bookingForm').classList.remove('hidden');
+            setMinDate();
+        }
+        function setMinDate() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('serviceDate').setAttribute('min', today);
         }
 
         document.getElementById('serviceBookingForm').addEventListener('submit', function(event) {
